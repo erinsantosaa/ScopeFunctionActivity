@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         // printing their output to the Log, which is visible in the LogCat:
         // eg. Log.d("function output", getTestDataArray().toString())
         Log.d("function output", getTestDataArray().toString())
+        Log.d("function output", averageLessThanMedian(generateRandomDoubles(10)).toString())
 
     }
 
@@ -36,16 +37,31 @@ class MainActivity : AppCompatActivity() {
     private fun getTestDataArray(): List<Int> = MutableList(10) { Random.nextInt() }.apply { sort() }
 
     // Return true if average value in list is greater than median value, false otherwise
-    private fun averageLessThanMedian(listOfNumbers: List<Double>): Boolean {
-        val avg = listOfNumbers.average()
-        val sortedList = listOfNumbers.sorted()
+//    private fun averageLessThanMedian(listOfNumbers: List<Double>): Boolean {
+//        val avg = listOfNumbers.average()
+//        val sortedList = listOfNumbers.sorted()
+//        val median = if (sortedList.size % 2 == 0)
+//            (sortedList[sortedList.size / 2] + sortedList[(sortedList.size - 1) / 2]) / 2
+//        else
+//            sortedList[sortedList.size / 2]
+//
+//        return avg < median
+//    }
+    private fun generateRandomDoubles(size: Int): List<Double> {
+        return MutableList(size) { Random.nextDouble() }
+    }
+    private fun averageLessThanMedian(listOfNumbers: List<Double>): Boolean = listOfNumbers.let { numbers ->
+        val avg = numbers.average()
+        val sortedList = numbers.sorted()
         val median = if (sortedList.size % 2 == 0)
             (sortedList[sortedList.size / 2] + sortedList[(sortedList.size - 1) / 2]) / 2
         else
             sortedList[sortedList.size / 2]
 
-        return avg < median
+        avg < median
     }
+
+
 
     // Create a view from an item in a collection, but recycle if possible (similar to an AdapterView's adapter)
     private fun getView(position: Int, recycledView: View?, collection: List<Int>, context: Context): View {
@@ -63,5 +79,6 @@ class MainActivity : AppCompatActivity() {
 
         return textView
     }
+
 
 }
